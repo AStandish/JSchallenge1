@@ -14,74 +14,76 @@ function writePassword() {
 generateBtn.addEventListener("click", writePassword);
 function generatePassword() {
   //character variables and password length. prompt user for info
-  const chars = "01234567890abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  let passwordLength = prompt("Please insert a length greater than 8 and less than 128");
+ 
+  const passwordLength = prompt("Please insert a length greater than 8 and less than 128");
   let password = "";
 
-  let symbols;
-  let numbers;
-  let upper;
-  let lower;
 
-  symbols = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")"];
-  numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
-  upper = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-  lower = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+  const symbols = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")"];
+  const numbers = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+  const upper = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+  const lower = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
 
   console.log("password length", passwordLength);
   //validates the user input
   if (passwordLength <= 8 || passwordLength >= 128) {
-    console.log("wrong password")
-    return "wrong length"
+    alert("wrong password");
+    return "wrong length";
   }
 
- // let lowerCase = prompt("Do you want lower case letters?");
+  const symbolsRequired = confirm("Select OK if you would like to include symbols");
+  const numbersRequired = confirm("Select OK if you would like to include numbers");
+  const upperRequired = confirm("Select OK if you would like to include uppercase letters");
+  const lowerRequired = confirm("Select OK if you would like to include lowercase letters");
 
- // console.log("lower case", lowerCase);
+  let groupsSelected = 0;
+  let passwordGen = [];
+ 
+ // randomly selects characters
 
- // let userPreference;
+  if (symbolsRequired) {
+    const randIndex = Math.floor(Math.random() * symbols.length);
+    const randChar = symbols[randIndex];
 
- // if (confirm("Confirm you do want lower case") == true) {
- //   userPreference = "Yes";
- // } else {
-  //  userPreference = "No";
- // }
+    groupsSelected++;
+    password += randChar;
+    passwordGen = passwordGen.concat(symbols);
+  }
+  if (numbersRequired) {
+    const randIndex = Math.floor(Math.random() * numbers.length);
+    const randChar = numbers[randIndex];
 
-  //let upperCase = prompt("Do you want upper case letters?");
+    groupsSelected++;
+    password += randChar;
+    passwordGen = passwordGen.concat(numbers);
+  }
+  if (upperRequired) {
+    const randIndex = Math.floor(Math.random() * upper.length);
+    const randChar = numbers[randIndex];
 
- // console.long("upper case", upperCase);
+    groupsSelected++;
+    password += randChar;
+    passwordGen = passwordGen.concat(upper);
+  }
+  if (lowerRequired) {
+    const randIndex = Math.floor(Math.random() * lower.length);
+    const randChar = numbers[randIndex];
 
-  //if (confirm("Confirm you do want upper case") == true) {
-  //  userPreference= "Yes";
-  //} else {
-  //  userPreference = "No";
-  //}
-
-symbols = confirm("Select OK if you would like to include symbols");
-numbers = confirm("Select OK if you would like to include numbers");
-upper = confirm("Select OK if you would like to include uppercase letters");
-lower = confirm("Select OK if you would like to include lowercase letters");
-
-const passwordGen = []
-if (symbols)
-passwordGen.concat.symbols
-if (numbers)
-passwordGen.concat.numbers
-if (upper)
-passwordGen.concat.upper
-if (lower)
-passwordGen.concat.lower
-
+    groupsSelected++;
+    password += randChar;
+    passwordGen = passwordGen.concat(lower);
+  }
   //generates the password by getting a random character upto the password length
-  for (i = 0; i <= passwordLength - 1; i++) {
-    const num = Math.round(Math.random() * chars.length - 1)
-    const char = chars[num]
-    console.log(char)
-    password += char
+  for (i = 0; i < passwordLength - groupsSelected; i++) {
+    const num = Math.floor(Math.random() * passwordGen.length);
+    const char = passwordGen[num];
+    console.log(char);
+    password += char;
   }
 
-  //returns final password
-  return password
-
+  //returns final password with random sort
+  return password.split().sort(function () {
+    return Math.random() - 0.5;
+  }).join();
 }
