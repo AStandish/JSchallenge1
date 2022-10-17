@@ -13,6 +13,7 @@ function writePassword() {
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 function generatePassword() {
+  
   //character variables and password length. prompt user for info
  
   const passwordLength = prompt("Please insert a length greater than 8 and less than 128");
@@ -60,7 +61,7 @@ function generatePassword() {
   }
   if (upperRequired) {
     const randIndex = Math.floor(Math.random() * upper.length);
-    const randChar = numbers[randIndex];
+    const randChar = upper[randIndex];
 
     groupsSelected++;
     password += randChar;
@@ -68,7 +69,7 @@ function generatePassword() {
   }
   if (lowerRequired) {
     const randIndex = Math.floor(Math.random() * lower.length);
-    const randChar = numbers[randIndex];
+    const randChar = lower[randIndex];
 
     groupsSelected++;
     password += randChar;
@@ -83,7 +84,7 @@ function generatePassword() {
   }
 
   //returns final password with random sort
-  return password.split().sort(function () {
+  return password.split('').sort(function () {
     return Math.random() - 0.5;
-  }).join();
+  }).join('');
 }
